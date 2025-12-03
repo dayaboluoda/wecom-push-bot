@@ -1,0 +1,26 @@
+name: Push Image to WeCom
+
+on:
+  schedule:
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install requests
+      run: pip install requests
+
+    - name: Run bot
+      env:
+        WEBHOOK: ${{ secrets.WEBHOOK }}
+      run: python bot.py
